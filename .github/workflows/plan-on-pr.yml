@@ -1,7 +1,7 @@
 name: Plan / Test On PR
 
 on:
-  pull_request:
+  pull_request: /* This is the main workflow event triggered by PULL REQUEST */
     branches:
       - main
 
@@ -11,24 +11,26 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  /* checks out the code of the branch you are making the PR from */ 
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v1 /* installs Terraform on the VM using hashicorp/setup-terraform */
         with:
           terraform_version: 1.0.9
 
       - name: Run terraform fmt check
-        run: terraform fmt -check -diff -recursive ./terraform
+        run: terraform fmt -check -diff -recursive ./terraform  /* check if the code is formatted correctly or not */
 
-  plan:
-    name: Plan
-    env:
+  /* execute the command once for each of our three environments (root modules) 
+  dev, stage, and prod. We then want to capture the output of the command and put it into the PR comments for review. */
+  plan: 
+    name: Plan 
+    env: /* setting an environment variable and fed into our root modules allowed_account_id variable */ 
       TF_VAR_allowed_account_id: ${{ secrets.ALLOWED_ACCOUNT_ID }}
     runs-on: ubuntu-20.04
     strategy:
-      fail-fast: false
-      matrix:
+      fail-fast: false /* not cancel any other in-progress jobs */
+      matrix: /* The matrix strategy is being used so that we create three distinct jobs from one job definition. */
         path:
           - dev
           - stage
@@ -45,21 +47,21 @@ jobs:
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
-        with:
+        with: /*  set the appropriate AWS environment variables */
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Initialize Terraform
-        run: |
+        run: | /* running some shell script to initialize Terraform */ 
           cd terraform/${{ matrix.path }}
-          terraform init -input=false
+          terraform init -input=false /*  Terraform to know this is non-interactive  NO human input */
 
       - name: Plan Terraform
-        id: plan
-        continue-on-error: true
+        id: plan /* This is a reference */
+        continue-on-error: true /* To see why the plan may have failed */
         run: |
-          cd terraform/${{ matrix.path }}
+          cd terraform/${{ matrix.path }} /* select a different working directory depending on which environment the job is running for */
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 

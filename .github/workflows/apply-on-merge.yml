@@ -1,6 +1,6 @@
 name: Plan / Apply On Merge
 
-on:
+on: // This is the main workflow event triggered by PUSH
   push:
     branches:
       - main
