@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out code
-        uses: actions/checkout@v2  # checks out the code of the branch you are making the PR from 
+        uses: actions/checkout@v3  # checks out the code of the branch you are making the PR from 
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1 # installs Terraform on the VM using hashicorp/setup-terraform 
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
