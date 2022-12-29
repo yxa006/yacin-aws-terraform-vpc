@@ -1,11 +1,11 @@
 name: Plan / Apply On Merge
 
-on: // This is the main workflow event triggered by PUSH
+on: # This is the main workflow event triggered by PUSH
   push:
     branches:
       - main
 
-jobs:
+jobs: # Jobs create individual “runners” 
   inform_about_apply:
     name: Inform About Apply
     runs-on: ubuntu-20.04
