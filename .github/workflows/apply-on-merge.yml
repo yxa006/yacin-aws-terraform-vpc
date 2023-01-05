@@ -10,6 +10,10 @@ jobs: # Jobs create individual “runners”
     name: Inform About Apply
     runs-on: ubuntu-20.04
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Inform on PR that Apply is Running
         uses: mshick/add-pr-comment@v1
@@ -30,8 +34,8 @@ jobs: # Jobs create individual “runners”
       matrix:
         path:
           - dev
-          #- stage
-          #- prod
+          - stage
+          - prod
 
     steps:
       - name: Check out code
@@ -45,9 +49,10 @@ jobs: # Jobs create individual “runners”
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::126327649590:oidc-provider/token.actions.githubusercontent.com
+          aws-region: ca-central-1
+          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Initialize Terraform
         run: |

@@ -6,7 +6,7 @@ provider "aws" {
     tags = {
       Environment = "prod"
       ManagedBy   = "terraform"
-      Repo        = "https://github.com/walkerab/terraform-plus-github-actions"
+      Repo        = "https://github.com/yxa006/yacin-aws-terraform-vpc"
     }
   }
 }
