@@ -12,7 +12,7 @@ jobs: # Jobs create individual “runners”
 
     permissions:
       id-token: write
-      contents: write
+      contents: read
 
     steps:
       - name: Inform on PR that Apply is Running
