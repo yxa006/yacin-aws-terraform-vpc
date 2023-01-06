@@ -34,8 +34,8 @@ jobs: # Jobs create individual “runners”
       matrix:
         path:
           - dev
-          - stage
-          - prod
+          #- stage
+         # - prod
 
     steps:
       - name: Check out code
