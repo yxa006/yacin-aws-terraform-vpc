@@ -11,7 +11,6 @@ jobs: # Jobs create individual “runners”
     runs-on: ubuntu-20.04
 
     permissions:
-      packages: write
       id-token: write
       contents: write
 
