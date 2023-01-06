@@ -11,8 +11,9 @@ jobs: # Jobs create individual “runners”
     runs-on: ubuntu-20.04
 
     permissions:
+      packages: write
       id-token: write
-      contents: read
+      contents: write
 
     steps:
       - name: Inform on PR that Apply is Running
@@ -47,7 +48,7 @@ jobs: # Jobs create individual “runners”
           terraform_version: 1.1.7
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1-node16
+        uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::413645677990:oidc-provider/token.actions.githubusercontent.com
           aws-region: ca-central-1
