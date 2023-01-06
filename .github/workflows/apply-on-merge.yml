@@ -47,7 +47,7 @@ jobs: # Jobs create individual “runners”
           terraform_version: 1.1.7
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@b8c74de753fbcb4868bf2011fb2e15826ce973af
+        uses: aws-actions/configure-aws-credentials@v1.6.1
         with:
           role-to-assume: arn:aws:iam::413645677990:role/my-github-actions-role
           aws-region: ca-central-1
